@@ -1,7 +1,7 @@
 # Party-Progressive-Budget
 # About the project:
 This is party progressive budget. This is a web application that allows the users to track their expenses through subraction and adding. They can create a Transation 
-without trouble. When the user enters the transaction while offline, all data is stored in  indexDB and transferred back to the database.
+without trouble. When the user enters the transaction while offline, all data is stored in IndexedDB and transferred back to the database.
 
 # User's Story
 I need an system to track my budget expenses for a special occassion, like travel and partying. 
@@ -9,8 +9,8 @@ When I create my own transaction, I am able to make deposits or withdrawals of m
 
 # Motivation
 
-My motivation is to make a transaction and its buttons is working smoothly and. Another motivation is to make 
-functionality and space for the code to be works  
+My motivation is to make a transaction and its buttons is working smoothly and properly. Another motivation is to make 
+functionality and space for the code to work. As a web developer, I want the website to run on its own. 
 
 
 # Tables of Contents
