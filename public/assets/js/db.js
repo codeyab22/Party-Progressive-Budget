@@ -1,52 +1,65 @@
-body {
-  font-size: 120%;
-  font-family: Arial;
+const indexedDB =
+  window.indexedDB ||
+  window.mozIndexedDB ||
+  window.webkitIndexedDB ||
+  window.msIndexedDB ||
+  window.shimIndexedDB;
+
+let db;
+const request = indexedDB.open("budget", 1);
+
+request.onupgradeneeded = (event) => {
+  event.target.result.createObjectStore("pending", {
+    keyPath: "id",
+    autoIncrement: true
+  });
+};
+
+request.onerror = (err) => {
+  console.log(err.message);
+};
+
+request.onsuccess = (event) => {
+  db = event.target.result;
+
+  if (navigator.onLine) {
+    checkDatabase();
+  }
+};
+
+// This function is called in index.js
+// when the user creates a transaction while offline.
+function saveRecord(record) {
+  const transaction = db.transaction("pending", "readwrite");
+  const store = transaction.objectStore("pending");
+  store.add(record);
 }
 
-button, input {
-  font-size: 100%;
-  font-family: Arial;
+// called when user goes online to send transactions stored in db to server
+function checkDatabase() {
+  const transaction = db.transaction("pending", "readonly");
+  const store = transaction.objectStore("pending");
+  const getAll = store.getAll();
+
+  getAll.onsuccess = () => {
+    if (getAll.result.length > 0) {
+      fetch("/api/transaction/bulk", {
+        method: "POST",
+        body: JSON.stringify(getAll.result),
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json"
+        }
+      })
+        .then((response) => response.json())
+        .then(() => {
+          const transaction = db.transaction("pending", "readwrite");
+          const store = transaction.objectStore("pending");
+          store.clear();
+        });
+    }
+  };
 }
 
-table {
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #DEB887;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #DEB887;
-}
-
-.error {
-  color: red;
-}
-
-.wrapper {
-  margin: 0 auto;
-  max-width: 825px;
-  text-align: center;
-}
-
-.total {
-  font-size: 150%;
-  text-decoration: underline;
-}
-
-.form {
-  margin-top: 25px;
-  width: 100%;
-}
-
-.transactions {
-  text-align: left;
-  max-height: 300px;
-  overflow: auto;
-  width: 90%;
-  margin: 0 auto;
-}
-
+// listen for app coming back online
+window.addEventListener("online", checkDatabase);
