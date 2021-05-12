@@ -34,15 +34,15 @@ functionality and space for the code to work. As a web developer, I want the web
 
 # Link of the Repository
 
-Here is the link of the repo: https://github.com/codeyab22/Party-Progressive-Budget
+Linkk of the repo: https://github.com/codeyab22/Party-Progressive-Budget
 
 # Link of  the Deployed Website: 
 
 https://party-progressive-budget.herokuapp.com/
 
 # Demo of the Screenshot
-![image](https://user-images.githubusercontent.com/72044418/112713591-56fef280-8eac-11eb-8d28-934c838f6d1a.png)
 
+![image](https://drive.google.com/uc?export=view&id=1ib4G2rbbyZT0tNAtumCW11xe7s1JUfT6)
 
 # License(s)
 
@@ -55,7 +55,7 @@ Only me. Open an pull request to contribute the project
 
 # Questions:
 
-If you have questions, feel free to ask me 
+If you have questions, feel free to ask me at
 
 Github: codeyab22
 
